@@ -10,12 +10,12 @@ import {ActionRowBuilder, ButtonBuilder, ButtonStyle} from "discord.js";
 export default {
     name: "profile",
     role: "CHAT_INPUT",
-    description: "Check out your own profile or someone else's",
+    description: "Проверьте свой собственный профиль или чужой профиль",
     options: [
         {
             type: 3,
             name: "name",
-            description: "The name of the account you wish to get the profile of",
+            description: "Имя учетной записи, профиль которой вы хотите получить",
             required: false,
         },
     ],
@@ -24,37 +24,32 @@ export default {
     run: async (interaction) =>  {
         const user = interaction.options.getString("name") || await db.query.users.findFirst({ where: eq(users.id, interaction.user.id) }).then(user => user?.enka_name);
         if (!user) {
-            await interaction.reply({ content: "User not found, either connect your account or check the account name you entered", ephemeral: true });
+            await interaction.reply({ content: "Пользователь не найден. Подключите свою учетную запись или проверьте введенное имя учетной записи.", ephemeral: true });
             return;
         }
 
         const apiProfile = await api.profile(user);
 
         if (!apiProfile) {
-            await interaction.reply({ content: "User not found, either reconnect your account or check the account name you entered", ephemeral: true });
+            await interaction.reply({ content: "Пользователь не найден. Подключите свою учетную запись повторно или проверьте введенное имя учетной записи.", ephemeral: true });
             return;
         }
 
         const profile = apiProfile.data as ProfileInfo;
 
         const embed = Embed()
-            .setTitle(`${profile.username}'s profile`)
+            .setTitle(`Профиль ${profile.username}`)
 
         if(profile.profile.bio) {
             embed.setDescription(profile.profile.bio);
         }
-        if(profile.profile.level > 0) {
-            embed.addFields({
-                    name: "Patreon Tier",
-                    value: String(profile.profile.level),
-                })
-        }
+
         if(profile.profile.avatar && profile.profile.avatar.startsWith("http")) {
             embed.setThumbnail(profile.profile.avatar);
         }
 
         const profileButton = new ButtonBuilder()
-            .setLabel("View profile")
+            .setLabel("Посмотреть профиль")
             .setStyle(ButtonStyle.Link)
             .setURL(`https://enka.network/u/${profile.username}/`)
 

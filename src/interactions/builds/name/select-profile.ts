@@ -12,7 +12,7 @@ export default {
     run: async (interaction) => {
         if (interaction.user.id !== interaction.message.interactionMetadata?.user.id) {
             return interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 ephemeral: true,
             });
         }
@@ -21,7 +21,7 @@ export default {
         const name = interaction.message.embeds[0].footer?.text.split(": ")[1];
 
         if(!name) {
-            await interaction.editReply({ content: "An error occurred, please try again", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Произошла ошибка, попробуйте еще раз", components: [], embeds: [], files: [] });
             return;
         }
 
@@ -30,7 +30,7 @@ export default {
         const apiHoyos = await api.hoyos(name);
 
         if (!apiHoyos) {
-            await interaction.editReply({ content: "User not found, either reconnect your account or check the account name you entered", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Пользователь не найден. Подключите свою учетную запись повторно или проверьте введенное имя учетной записи.", components: [], embeds: [], files: [] });
             return;
         }
 
@@ -39,7 +39,7 @@ export default {
         const selectMenu = await selectCharacter(interaction, name, hoyos[profile]);
 
         if(!selectMenu) {
-            await interaction.editReply({ content: "An error occurred, please try again", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Произошла ошибка, попробуйте еще раз", components: [], embeds: [], files: [] });
             return;
         }
 

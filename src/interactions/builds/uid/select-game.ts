@@ -12,7 +12,7 @@ export default {
     run: async (interaction) => {
         if (interaction.user.id !== interaction.message.interactionMetadata?.user.id) {
             return interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 ephemeral: true,
             });
         }
@@ -21,7 +21,7 @@ export default {
         const uid = interaction.message.embeds[0].footer?.text.split(": ")[1];
 
         if(!uid) {
-            await interaction.editReply({ content: "An error occurred, please try again", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Произошла ошибка, попробуйте еще раз", components: [], embeds: [], files: [] });
             return;
         }
 
@@ -30,7 +30,7 @@ export default {
         const selectMenu = await selectUidCharacter(uid, game);
 
         if(!selectMenu) {
-            await interaction.editReply({ content: "An error occurred, please try again", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Произошла ошибка, попробуйте еще раз", components: [], embeds: [], files: [] });
             return;
         }
 

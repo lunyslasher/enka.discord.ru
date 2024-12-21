@@ -7,24 +7,24 @@ export function Embed() {
 
 export function connectAccountEmbed(profile: ProfileInfo, code: string) {
     return Embed()
-        .setTitle("Connect your account")
-        .setDescription(`To connect your Discord account to ${profile.username}, please include the following code inside your bio ([User Settings](https://enka.network/profile/settings/)): \`${code}\`
+        .setTitle("Привязать аккаунт Discord")
+        .setDescription(`Чтобы привзать свой аккаунт Discord к ${profile.username}, пожалуйста, включите следующий код в описание в ([настройках](https://enka.network/profile/settings/)): \`${code}\`
 
-Once this has been completed, click the \`Verify\` button below.
-To cancel, click the \`Cancel\` button.`)
+После того как ввели код, нажмите кнопку \`Подвердить\` ниже.
+Для отмены нажмите кнопку \`Отмена\`.`)
         .setFooter({ text: "This code will expire in 5 minutes" })
 }
 
 export function generateBuildEmbed(name: string, color?: ColorResolvable) {
     return (!color ? Embed() : new EmbedBuilder().setColor(color))
-        .setTitle(`Select a build`)
-        .setDescription("From the select menus below, choose the builds you want to view")
-        .setFooter({ text: `Related account: ${name}`})
+        .setTitle(`Выберите сборку`)
+        .setDescription("В меню выбора ниже выберите сборки, которые хотите просмотреть.")
+        .setFooter({ text: `Аккаунт: ${name}`})
 }
 
 export function generateUidBuildEmbed(uid: string, color?: ColorResolvable) {
     return (!color ? Embed() : new EmbedBuilder().setColor(color))
-        .setTitle("Select a game")
-        .setDescription("In the select menu below, choose the game this UID relates to and build you want to view")
-        .setFooter({ text: `Related UID: ${uid}`})
+        .setTitle("Выберите игру")
+        .setDescription("В меню выбора ниже выберите игру, к которой относится этот UID, и сборку, которую вы хотите просмотреть.")
+        .setFooter({ text: `UID: ${uid}`})
 }

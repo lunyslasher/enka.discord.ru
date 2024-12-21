@@ -25,12 +25,12 @@ export default async function (client: Client) {
                 if (interaction.deferred || interaction.replied)
                     await interaction.editReply({
                         content:
-                            'There was an error while executing this command!',
+                            'При выполнении этой команды произошла ошибка!',
                     });
                 else
                     await interaction.reply({
                         content:
-                            'There was an error while executing this command!',
+                            'При выполнении этой команды произошла ошибка!',
                         ephemeral: true,
                     });
             }

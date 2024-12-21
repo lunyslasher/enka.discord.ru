@@ -18,18 +18,18 @@ import {selectCharacter} from "../../utils/select-menus";
 export default {
     name: "builds",
     role: "CHAT_INPUT",
-    description: "Check out your builds, or someone else's",
+    description: "Проверьте свои сборки или чужие",
     options: [
         {
             type: 3,
             name: "name",
-            description: "The name of the enka.network account you wish to get the builds of",
+            description: "Имя учетной записи enka.network, для которой вы хотите получить сборки.",
             required: false,
         },
         {
             type: 3,
             name: "uid",
-            description: "The UID you want to get the builds of",
+            description: "UID, для которого вы хотите получить сборки",
             required: false,
         }
     ],
@@ -39,39 +39,39 @@ export default {
         let name = interaction.options.getString("name");
         const uid = interaction.options.getString("uid");
         if(name && uid) {
-            await interaction.reply({ content: "Please only set either name or UID, not both", ephemeral: true });
+            await interaction.reply({ content: "Пожалуйста, указывайте только имя или UID, но не оба одновременно.", ephemeral: true });
         } else if (!name && !uid) {
             name = await db.query.users.findFirst({ where: eq(users.id, interaction.user.id) }).then(user => user?.enka_name || null);
             if(!name) {
-                await interaction.reply({ content: "User not found, either connect your account or check the account name you entered", ephemeral: true });
+                await interaction.reply({ content: "Пользователь не найден. Подключите свою учетную запись или проверьте введенное имя учетной записи.", ephemeral: true });
                 return;
             }
         }
         if(uid) return await uidFunc(interaction, uid);
         if(name) return await nameFunc(interaction, name);
-        return await interaction.reply({ content: "Please set either name or UID", ephemeral: true });
+        return await interaction.reply({ content: "Пожалуйста, укажите имя или UID", ephemeral: true });
     },
 } satisfies Command;
 
 async function uidFunc(interaction: ChatInputCommandInteraction<CacheType>, uid: string) {
     const embed = Embed()
-        .setTitle("Select a game")
-        .setDescription("In the select menu below, choose the game this UID relates to")
-        .setFooter({ text: `Related UID: ${uid}`})
+        .setTitle("Выберите игру")
+        .setDescription("В меню выбора ниже выберите игру, к которой относится этот UID.")
+        .setFooter({ text: `UID: ${uid}`})
 
     const selectMenu = new StringSelectMenuBuilder().setMaxValues(1).setMinValues(1)
         .setCustomId("uid_select_game")
-        .setPlaceholder("Select a game")
+        .setPlaceholder("Выберите игру")
         .addOptions(
             new StringSelectMenuOptionBuilder()
                 .setLabel("Genshin Impact")
                 .setValue("genshin")
-                .setDescription("This UID is a Genshin Impact UID")
+                .setDescription("Этот UID для Genshin Impact.")
                 .setEmoji("1296399185691676734"),
             new StringSelectMenuOptionBuilder()
                 .setLabel("Honkai: Star Rail")
                 .setValue("honkai")
-                .setDescription("This UID is a Honkai: Star Rail UID")
+                .setDescription("Этот UID для Honkai: Star Rail.")
                 .setEmoji("1296399188313247774"),
         )
 
@@ -83,7 +83,7 @@ async function nameFunc(interaction: ChatInputCommandInteraction<CacheType>, nam
     const apiHoyos = await api.hoyos(name);
 
     if (!apiHoyos) {
-        await interaction.reply({ content: "User not found, either reconnect your account or check the account name you entered", ephemeral: true });
+        await interaction.reply({ content: "Пользователь не найден. Подключите свою учетную запись повторно или проверьте введенное имя учетной записи.", ephemeral: true });
         return;
     }
 
@@ -96,7 +96,7 @@ async function nameFunc(interaction: ChatInputCommandInteraction<CacheType>, nam
     });
 
     if(hoyoArray.length === 0) {
-        await interaction.reply({ content: "This user has no public builds", ephemeral: true });
+        await interaction.reply({ content: "У этого пользователя нет публичных сборок", ephemeral: true });
         return;
     }
 
@@ -110,7 +110,7 @@ async function nameFunc(interaction: ChatInputCommandInteraction<CacheType>, nam
 
     if(hoyoArray.length > 1) {
         selectMenu.setCustomId("name_select_profile")
-        selectMenu.setPlaceholder("Select a profile")
+        selectMenu.setPlaceholder("Выберите профиль")
         selectMenu.setOptions(hoyoArray.map(profile => {
             const gameName = profile.hoyo_type === 0 ? "Genshin Impact" : "Honkai: Star Rail";
             return new StringSelectMenuOptionBuilder()
@@ -124,7 +124,7 @@ async function nameFunc(interaction: ChatInputCommandInteraction<CacheType>, nam
             .setMaxValues(1)
             .setMinValues(1)
             .setCustomId("name_select_profile")
-            .setPlaceholder("Select a profile")
+            .setPlaceholder("Выберите профиль")
             .setDisabled(true)
             .addOptions(
                 new StringSelectMenuOptionBuilder()
@@ -140,7 +140,7 @@ async function nameFunc(interaction: ChatInputCommandInteraction<CacheType>, nam
         const char = await selectCharacter(interaction, name, hoyoArray[0]);
 
         if(!char) {
-            await interaction.editReply({ content: "An error occurred, please try again", components: [], embeds: [] });
+            await interaction.editReply({ content: "Произошла ошибка, попробуйте еще раз", components: [], embeds: [] });
             return;
         }
 

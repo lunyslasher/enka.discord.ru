@@ -19,7 +19,7 @@ export default {
     run: async (interaction) => {
         if (interaction.user.id !== interaction.message.interactionMetadata?.user.id) {
             return interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 ephemeral: true,
             });
         }
@@ -28,7 +28,7 @@ export default {
         const name = interaction.message.embeds[0].footer?.text.split(": ")[1];
 
         if(!name) {
-            await interaction.editReply({ content: "An error occurred, please try again", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Произошла ошибка, попробуйте еще раз", components: [], embeds: [], files: [] });
             return;
         }
 
@@ -40,7 +40,7 @@ export default {
         const apiHoyos = await api.hoyosBuilds(name, hash);
 
         if (!apiHoyos) {
-            await interaction.editReply({ content: "User not found, either reconnect your account or check the account name you entered", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Пользователь не найден. Подключите свою учетную запись повторно или проверьте введенное имя учетной записи.", components: [], embeds: [], files: [] });
             return;
         }
 
@@ -49,7 +49,7 @@ export default {
         const characterBuilds = builds[characterId];
 
         if(!characterBuilds || characterBuilds.length === 0) {
-            await interaction.editReply({ content: "This character has no public builds", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "У этого персонажа нет публичных сборок.", components: [], embeds: [], files: [] });
             return;
         }
 
@@ -58,7 +58,7 @@ export default {
         if(Object.keys(characterBuilds).length === 1) {
             const build = characterBuilds[0];
 
-            const image = await getBuffer(`https://cards.enka.network/u/${name}/${hash}/${characterId}/${build.id}/image`)
+            const image = await getBuffer(`https://cards.enka.network/u/${name}/${hash}/${characterId}/${build.id}/image?lang=ru`)
 
             const imgName = `${name}-${hash}-${characterId}-${build.id}.png`;
 
@@ -67,9 +67,9 @@ export default {
             const character = await characters.getCharacterById(build.hoyo_type, characterId);
 
             const embed = Embed()
-                .setTitle(`Build: ${build.name || "Current"}`)
+                .setTitle(`Сборка: ${build.name || "Витрина"}`)
                 .setImage(`attachment://${imgName}`)
-                .setFooter({ text: `Related account: ${name}`})
+                .setFooter({ text: `Аккаунт: ${name}`})
                 .setColor(character ? colors[build.hoyo_type === 0 ? `GI${character.element}` : `HSR${character.element}` ] : "RANDOM");
 
             return await interaction.editReply({ embeds: [embed], components, files: [attachment] });
@@ -79,13 +79,13 @@ export default {
 
         const selectMenu = new StringSelectMenuBuilder().setMaxValues(1).setMinValues(1)
             .setCustomId("name_select_build")
-            .setPlaceholder("Select a build")
+            .setPlaceholder("Выберите сборку")
             .addOptions(
                 characterBuilds.map(build => {
                     return new StringSelectMenuOptionBuilder()
-                        .setLabel(build.name || "Current")
+                        .setLabel(build.name || "Витрина")
                         .setValue(String(build.id))
-                        .setDescription("Select this build")
+                        .setDescription("Выбрать эту сборку")
                 })
             )
 

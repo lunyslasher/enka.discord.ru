@@ -11,7 +11,7 @@ services:
   bot:
     build:
       context: .
-      dockerfile: dev.Dockerfile
+      dockerfile: Dockerfile
       args:
         DATABASE_URL: postgres://postgres:postgres@database:5432/postgres
     restart: unless-stopped

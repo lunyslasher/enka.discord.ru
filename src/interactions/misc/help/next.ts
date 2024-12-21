@@ -9,7 +9,7 @@ export default {
     run: async (interaction) => {
         if (interaction.user.id !== interaction.message.interactionMetadata?.user.id) {
             return interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 ephemeral: true,
             });
         }
@@ -24,7 +24,7 @@ export default {
                 fields.push({ name: name, value: command.description });
         }
         const pageCount = Math.ceil(fields.length / 10);
-        const footer = `Page ${(pageNumber + 1).toString()} out of ${pageCount.toString()}`
+        const footer = `Страница ${(pageNumber + 1).toString()} из ${pageCount.toString()}`
 
         fields = fields.slice(pageNumber * 10, (pageNumber + 1) * 10);
 
@@ -36,12 +36,12 @@ export default {
 
         const previous = new ButtonBuilder()
             .setCustomId("previous")
-            .setLabel("Previous")
+            .setLabel("Предыдущая")
             .setStyle(ButtonStyle.Primary);
 
         let next = new ButtonBuilder()
             .setCustomId("next")
-            .setLabel("Next")
+            .setLabel("Следующая")
             .setStyle(ButtonStyle.Primary);
 
         if (pageNumber + 1 === pageCount) {

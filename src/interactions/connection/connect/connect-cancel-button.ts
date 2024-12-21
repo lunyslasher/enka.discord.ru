@@ -9,11 +9,11 @@ export default {
     run: async (interaction) => {
         if (interaction.user.id !== interaction.message.interactionMetadata?.user.id) {
             return interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 ephemeral: true,
             });
         }
         userVerifCodes.delete(interaction.user.id);
-        await interaction.update({ content: "Connection cancelled", embeds: [], components: [] });
+        await interaction.update({ content: "Привязка отменена", embeds: [], components: [] });
     },
 } satisfies Command;

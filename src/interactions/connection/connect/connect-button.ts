@@ -12,7 +12,7 @@ export default {
     run: async (interaction) => {
         if (interaction.user.id !== interaction.message.interactionMetadata?.user.id) {
             return interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 ephemeral: true,
             });
         }
@@ -20,12 +20,12 @@ export default {
 
         const code = userVerifCodes.get(interaction.user.id);
         if (!code) {
-            await interaction.editReply({ content: "Your code either expired or there was an error, try again", embeds: [], components: [] });
+            await interaction.editReply({ content: "Срок действия вашего кода истек или произошла ошибка, попробуйте еще раз.", embeds: [], components: [] });
             return;
         }
         const response = await get<ProfileInfo | NoProfile>(`https://enka.network/api/profile/${code.name}/?format=json`).catch(() => null);
         if (!response || ('detail' in response.data && response.data.detail === "Not found.")) {
-            await interaction.editReply({ content: "User not found, try again", embeds: [], components: [] });
+            await interaction.editReply({ content: "Пользователь не найден, попробуйте еще раз", embeds: [], components: [] });
             return;
         }
 
@@ -37,14 +37,14 @@ export default {
                     id: interaction.user.id,
                     enka_name: code.name
                 }).onConflictDoUpdate({target: users.id, set: {enka_name: code.name}}).execute();
-                await interaction.editReply({content: "Account connected successfully", embeds: [], components: []});
+                await interaction.editReply({content: "Аккаунт успешно привязан", embeds: [], components: []});
             } catch (e: unknown) {
-                await interaction.editReply({content: "An error occurred while connecting your account, please try again", embeds: [], components: []});
+                await interaction.editReply({content: "При прмвязке вашей учетной записи произошла ошибка. Повторите попытку.", embeds: [], components: []});
             }
         } else {
             const embed = Embed()
-                .setTitle("Incorrect code")
-                .setDescription("The code you entered is incorrect, please try again. Your code is: " + code.code)
+                .setTitle("Неправильный код")
+                .setDescription("Введенный вами код неверен, попробуйте еще раз. Ваш код: " + code.code)
             await interaction.editReply({ embeds: [embed] });
         }
     },

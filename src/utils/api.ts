@@ -126,7 +126,7 @@ export async function getGICharacters() {
     );
     const data: GICharactersAPI = response.data;
     const returndata: Characters[] = [];
-    const localedata = locales['en'];
+    const localedata = locales['ru'];
     for (const [key, value] of Object.entries(data)) {
         const name = localedata[value.NameTextMapHash];
         returndata.push({
@@ -173,7 +173,7 @@ export async function getHSRCharacters() {
     );
     const data: HSRCharactersAPI = response.data;
     const returndata: Characters[] = [];
-    const localedata = locales['en'];
+    const localedata = locales['ru'];
     for (const [key, value] of Object.entries(data)) {
         const name = localedata[value.AvatarName.Hash];
         returndata.push({

@@ -34,12 +34,12 @@ export async function selectCharacter(interaction: Interaction<CacheType>, name:
         return { character, builds: builds.data, emojiId };
     }))).filter((char): char is { character: Characters, builds: HoyoCharacters, emojiId: string } => char !== null);
     selectMenu.setCustomId("name_select_character")
-    selectMenu.setPlaceholder("Select a character")
+    selectMenu.setPlaceholder("Выберите персонажа")
     selectMenu.setOptions(profileCharacters.map((char) => {
         return new StringSelectMenuOptionBuilder()
             .setLabel(char.character.name)
             .setValue(char.character.characterId)
-            .setDescription(`Select a build for ${char.character.name}`)
+            .setDescription(`Посмотреть сборку персонажа ${char.character.name}`)
             .setEmoji(char.emojiId)
     }))
     return selectMenu;
@@ -65,12 +65,12 @@ export async function selectUidCharacter(uid: string, game: string, selectMenu: 
         }
     }
     selectMenu.setCustomId("uid_select_character")
-    selectMenu.setPlaceholder("Select a character")
+    selectMenu.setPlaceholder("Выберите персонажа")
     selectMenu.setOptions(profileCharacters.map((char) => {
         return new StringSelectMenuOptionBuilder()
             .setLabel(char.name)
             .setValue(char.characterId)
-            .setDescription(`Select a build for ${char.name}`)
+            .setDescription(`Посмотреть сборку персонажа ${char.name}`)
             .setEmoji(emojiIds[`${game === "genshin" ? "GI" : "HSR"}${char.element}`])
     }))
     return selectMenu;

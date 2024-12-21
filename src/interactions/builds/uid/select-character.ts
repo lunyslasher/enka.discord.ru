@@ -18,7 +18,7 @@ export default {
     run: async (interaction) => {
         if (interaction.user.id !== interaction.message.interactionMetadata?.user.id) {
             return interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 ephemeral: true,
             });
         }
@@ -27,7 +27,7 @@ export default {
         const uid = interaction.message.embeds[0].footer?.text.split(": ")[1];
 
         if(!uid) {
-            await interaction.editReply({ content: "An error occurred, please try again", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Произошла ошибка, попробуйте еще раз", components: [], embeds: [], files: [] });
             return;
         }
 
@@ -38,7 +38,7 @@ export default {
 
         const user = await api.uid(uid, game === "genshin" ? 0 : 1);
         if (!user) {
-            await interaction.editReply({ content: "User not found, please try again", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Пользователь не найден, попробуйте еще раз", components: [], embeds: [], files: [] });
             return;
         }
         const username = 'detailInfo' in user.data ? user.data.detailInfo.nickname : user.data.playerInfo.nickname;
@@ -46,7 +46,7 @@ export default {
 
         const components = getSelectsFromMessage(interaction.message.components, ["uid_select_game", "uid_select_character"], values);
 
-        const url = `https://cards.enka.network/${game === "genshin" ? "u" : "hsr"}/${uid}/${cardNumber+1}/image`;
+        const url = `https://cards.enka.network/${game === "genshin" ? "u" : "hsr"}/${uid}/${cardNumber+1}/image?lang=ru`;
 
         const image = await getBuffer(url);
 
@@ -57,14 +57,14 @@ export default {
         const character = await characters.getCharacterById(game === "genshin" ? 0 : 1, characterId);
 
         if(!character) {
-            await interaction.editReply({ content: "Character not found, please try again", components: [], embeds: [], files: [] });
+            await interaction.editReply({ content: "Персонаж не найден, попробуйте еще раз", components: [], embeds: [], files: [] });
             return;
         }
 
         const embed = Embed()
-            .setTitle(`${username}'s ${character.name} Build`)
+            .setTitle(`${character.name} пользователя ${username}`)
             .setImage(`attachment://${imgName}`)
-            .setFooter({ text: `Related UID: ${uid}` })
+            .setFooter({ text: `UID: ${uid}` })
             .setColor(colors[game === "genshin" ? `GI${character.element}` : `HSR${character.element}`]);
 
         await interaction.editReply({ embeds: [embed], components, files: [attachment] });

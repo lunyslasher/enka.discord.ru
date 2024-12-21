@@ -13,7 +13,7 @@ export default {
     run: async (interaction) => {
         if (interaction.user.id !== interaction.message.interactionMetadata?.user.id) {
             return interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 ephemeral: true,
             });
         }
@@ -22,12 +22,12 @@ export default {
         const user = await db.query.users.findFirst({ where: eq(users.id, interaction.user.id) });
 
         if(!user || !user.enka_name) {
-            await interaction.editReply({ content: "You don't have an account connected", embeds: [], components: [] });
+            await interaction.editReply({ content: "У вас не привязан аккаунт", embeds: [], components: [] });
             return;
         }
 
         await db.delete(users).where(eq(users.id, interaction.user.id)).execute();
 
-        await interaction.editReply({ content: "Account disconnected successfully", embeds: [], components: [] });
+        await interaction.editReply({ content: "Аккаунт успешно отвязан", embeds: [], components: [] });
     },
 } satisfies Command;

@@ -19,7 +19,7 @@ export default {
     run: async (interaction) => {
         if (interaction.user.id !== interaction.message.interactionMetadata?.user.id) {
             return interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 ephemeral: true,
             });
         }
@@ -30,7 +30,7 @@ export default {
         const name = oldEmbed.footer?.text.split(": ")[1];
 
         if(!name) {
-            await interaction.editReply({ content: "An error occurred, please try again", components: [], embeds: [] });
+            await interaction.editReply({ content: "Произошла ошибка, попробуйте еще раз", components: [], embeds: [] });
             return;
         }
 
@@ -43,7 +43,7 @@ export default {
         const apiHoyos = await api.hoyosBuilds(name, hash);
 
         if (!apiHoyos) {
-            await interaction.editReply({ content: "User not found, either reconnect your account or check the account name you entered", components: [], embeds: [] });
+            await interaction.editReply({ content: "Пользователь не найден. Подключите свою учетную запись повторно или проверьте введенное имя учетной записи.", components: [], embeds: [] });
             return;
         }
 
@@ -52,20 +52,20 @@ export default {
         const characterBuilds = builds[characterId];
 
         if(!characterBuilds || characterBuilds.length === 0) {
-            await interaction.editReply({ content: "This character has no public builds", components: [], embeds: [] });
+            await interaction.editReply({ content: "У этого персонажа нет публичных сборок.", components: [], embeds: [] });
             return;
         }
 
         const build = characterBuilds.find(build => String(build.id) === buildId);
 
         if(!build) {
-            await interaction.editReply({ content: "This build was not found", components: [], embeds: [] });
+            await interaction.editReply({ content: "Данная сборка не найдена", components: [], embeds: [] });
             return;
         }
 
         let components = getSelectsFromMessage(interaction.message.components, ["name_select_profile", "name_select_character", "name_select_build"], values);
 
-        const url = `https://cards.enka.network/u/${name}/${hash}/${characterId}/${build.id}/image`;
+        const url = `https://cards.enka.network/u/${name}/${hash}/${characterId}/${build.id}/image?lang=ru`;
 
         const image = await getBuffer(url)
 
@@ -74,9 +74,9 @@ export default {
         const attachment = new AttachmentBuilder(image, { name: imgName });
 
         const embed = Embed()
-            .setTitle(`Build: ${build.name || "Current"}`)
+            .setTitle(`Cборка: ${build.name || "Витрина"}`)
             .setImage(`attachment://${imgName}`)
-            .setFooter({ text: `Related account: ${name}`})
+            .setFooter({ text: `Аккаунт: ${name}`})
             .setColor(oldEmbed.color);
 
 
