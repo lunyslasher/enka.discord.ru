@@ -4,7 +4,7 @@ import {MessageFlagsBitField} from "discord.js";
 export default {
     name: "invite",
     role: "CHAT_INPUT",
-    description: "Get the bot's invite",
+    description: "Получить ссылку на приглашение бота",
     contexts: [0, 1, 2],
     integration_types: [0, 1],
     run: async (interaction) => {

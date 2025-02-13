@@ -6,14 +6,14 @@ import {EmbedBuilder} from "../../../utils/embeds";
 export default {
     name: "help",
     role: "CHAT_INPUT",
-    description: "Get help with the bot",
+    description: "Получить помощь по боту",
     contexts: [0, 1, 2],
     integration_types: [0, 1],
     run: async (interaction) => {
         const embed_ = new EmbedBuilder()
             .setTitle("Help")
             .setDescription(
-                "Get help with the bot by navigating through the commands below",
+                "Получите помощь по боту, перейдя через команды ниже.",
             );
 
         let fields: { name: string; value: string }[] = [];
@@ -30,7 +30,7 @@ export default {
             pagify = true;
             fields = fields.slice(0, 10);
             embed_.setFooter({
-                text: `Page 1 out of ${pageCount}`
+                text: `Страница 1 из ${pageCount}`
             });
         }
 
@@ -39,12 +39,12 @@ export default {
         if (pagify) {
             const previous = new ButtonBuilder()
                 .setCustomId("previous")
-                .setLabel("Previous")
+                .setLabel("Назад")
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true);
             const next = new ButtonBuilder()
                 .setCustomId("next")
-                .setLabel("Next")
+                .setLabel("Далее")
                 .setStyle(ButtonStyle.Primary);
             const row = new ActionRowBuilder<ButtonBuilder>().setComponents(
                 previous,

@@ -7,7 +7,7 @@ import {ZZZUIDResponse} from "../types/zzz";
 import UID from "./uid";
 
 export type NoProfile = {
-    detail: "Not found."
+    detail: "Не найдено."
 }
 
 export default class API {

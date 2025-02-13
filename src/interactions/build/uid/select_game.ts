@@ -12,12 +12,12 @@ export default {
     run: async (interaction) => {
         if(!sameUser(interaction)) {
             return await interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 flags: MessageFlagsBitField.Flags.Ephemeral
             });
         }
 
-        const errorMsg = "An error occurred whilst trying to complete this. Try again."
+        const errorMsg = "При выполнении произошла ошибка. Попробуйте ещё раз."
 
         const uid = interaction.message.embeds[0].footer?.text;
         if(!uid) return await interaction.reply({
@@ -29,7 +29,7 @@ export default {
 
         if(hoyo_type === HoyoType.ZZZ) {
             return await interaction.reply({
-                content: "This game is unsupported until enka fully releases it.",
+                content: "Эта игра не поддерживается до тех пор, пока Enka полностью ее не выпустит.",
                 flags: MessageFlagsBitField.Flags.Ephemeral
             })
         }
@@ -38,7 +38,7 @@ export default {
 
         const data = await API.uid(Number(interaction.values[0]) as HoyoType_T, uid);
         if(!data) return await interaction.editReply({
-            content: "This UID does not exist, or couldn't be fetched."
+            content: "Этот UID не существует или не может быть получен."
         })
 
         const rows = setDefault(interaction.message.components.slice(0,1), interaction.values[0])

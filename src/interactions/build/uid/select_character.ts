@@ -17,7 +17,7 @@ export default {
             });
         }
 
-        const errorMsg = "An error occurred whilst trying to complete this. Try again."
+        const errorMsg = "При выполнении произошла ошибка. Попробуйте ещё раз."
 
         const uid = interaction.message.embeds[0].footer?.text;
         if(!uid) return await interaction.reply({

@@ -13,21 +13,21 @@ export default {
         await interaction.client.application.fetch();
         const embed = new EmbedBuilder()
             .setTitle("enka.discord")
-            .setDescription("An open-source Discord bot designed to make your gacha life easier with the power of enka.network")
+            .setDescription("Бот Discord с открытым исходным кодом, призванный облегчить вашу жизнь в гачах благодаря возможностям enka.network.\n\nПеревод на русский: @lunyslasher")
             .addFields({
-                name: "Contributors",
+                name: "Разработчики",
                 value: "[@jxtq](<https://discord.com/users/618689346828238848>) ([@jxtq.moe](<https://bsky.app/profile/jxtq.moe>))"
             },{
-                name: "Ping",
-                value: `${interaction.client.ws.ping}ms`,
+                name: "Пинг",
+                value: `${interaction.client.ws.ping}мс`,
                 inline: true
             },{
-                name: "Uptime",
+                name: "Аптайм",
                 value: `<t:${Math.floor(started / 1000)}:R>`,
                 inline: true
             }, {
-                name: "Install Count (Servers and Users)",
-                value: `Servers: ${interaction.client.guilds.cache.size}\nUsers: ${interaction.client.application.approximateUserInstallCount ?? 0}`,
+                name: "Количество установок (серверы и пользователи)",
+                value: `Серверы: ${interaction.client.guilds.cache.size}\nПользователи: ${interaction.client.application.approximateUserInstallCount ?? 0}`,
                 inline: true
             })
 
@@ -36,17 +36,22 @@ export default {
             .setStyle(ButtonStyle.Link)
             .setURL("https://github.com/LumiFae/enka.discord")
 
-        const inviteButton = new ButtonBuilder()
-            .setLabel("Invite")
+        const ghButtonRu = new ButtonBuilder()
+            .setLabel("GitHub RU")
             .setStyle(ButtonStyle.Link)
-            .setURL("https://discord.com/oauth2/authorize?client_id=1296584939583701044")
+            .setURL("https://github.com/lunyslasher/enka.discord.ru")
 
-        const donateButton = new ButtonBuilder()
-            .setLabel("Donate")
-            .setStyle(ButtonStyle.Link)
-            .setURL("https://ko-fi.com/jxtq")
+        // const inviteButton = new ButtonBuilder()
+        //     .setLabel("Invite")
+        //     .setStyle(ButtonStyle.Link)
+        //     .setURL("https://discord.com/oauth2/authorize?client_id=1296584939583701044")
+        //
+        // const donateButton = new ButtonBuilder()
+        //     .setLabel("Donate")
+        //     .setStyle(ButtonStyle.Link)
+        //     .setURL("https://ko-fi.com/jxtq")
 
-        const row = new ActionRowBuilder<ButtonBuilder>().addComponents(ghButton, inviteButton, donateButton)
+        const row = new ActionRowBuilder<ButtonBuilder>().addComponents(ghButton, ghButtonRu)
 
         await interaction.reply({ embeds: [embed], components: [row] })
     },

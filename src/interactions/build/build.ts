@@ -17,17 +17,17 @@ import {selectCharacter} from "../../utils/select-menus";
 export default {
     name: "build",
     role: "CHAT_INPUT",
-    description: "Get a build by an enka.network profile.",
+    description: "Просмотреть сборку по профилю enka.network.",
     options: [
         {
             type: ApplicationCommandOptionType.Subcommand,
             name: "uid",
-            description: "Get a build by their UID",
+            description: "Посмотреть сборку по UID пользователя",
             options: [
                 {
                     type: ApplicationCommandOptionType.String,
                     name: "uid",
-                    description: "The UID of the account",
+                    description: "UID учетной записи",
                     required: true
                 }
             ]
@@ -35,12 +35,12 @@ export default {
         {
             type: ApplicationCommandOptionType.Subcommand,
             name: "profile",
-            description: "Get a profile by their enka.network name",
+            description: "Просмотреть профиль по нику enka.network",
             options: [
                 {
                     type: ApplicationCommandOptionType.String,
                     name: "name",
-                    description: "The profile name",
+                    description: "Имя профиля",
                     required: false
                 }
             ]
@@ -62,7 +62,7 @@ export default {
 
 async function profile(interaction: ChatInputCommandInteraction) {
     const userNotFound: InteractionReplyOptions = {
-        content: "User not found, either connect your account or check the account name you entered",
+        content: "Пользователь не найден. Подключите свою учетную запись или проверьте введенное имя учетной записи.",
         flags: MessageFlagsBitField.Flags.Ephemeral
     }
     const name = interaction.options.getString("name") ?? (await db.query.users.findFirst({where: eq(users.id, interaction.user.id)}))?.enka_name ?? null;
@@ -78,7 +78,7 @@ async function profile(interaction: ChatInputCommandInteraction) {
     const arr = Object.values(hoyos).filter((h) => Object.keys(h.avatar_order ?? {}).length > 0);
     if (arr.length === 0) {
         await interaction.reply({
-            content: "This user either has no publicly accessible profiles, or has no characters on any profiles.",
+            content: "У этого пользователя либо нет общедоступных профилей, либо он не имеет персонажей в каких-либо профилях.",
             flags: MessageFlagsBitField.Flags.Ephemeral
         });
         return;
@@ -124,17 +124,17 @@ async function uid(interaction: ChatInputCommandInteraction) {
             new StringSelectMenuOptionBuilder()
                 .setLabel("Genshin Impact")
                 .setValue("0")
-                .setDescription("This UID is a Genshin Impact UID")
+                .setDescription("Этот UID является UID Genshin Impact")
                 .setEmoji("1296399185691676734"),
             new StringSelectMenuOptionBuilder()
                 .setLabel("Honkai: Star Rail")
                 .setValue("1")
-                .setDescription("This UID is a Honkai: Star Rail UID")
+                .setDescription("Этот UID является UID Honkai: Star Rail")
                 .setEmoji("1296399188313247774"),
             new StringSelectMenuOptionBuilder()
-                .setLabel("Zenless Zone Zero (Coming Soon)")
+                .setLabel("Zenless Zone Zero (Скоро)")
                 .setValue("2")
-                .setDescription("This UID is a Zenless Zone Zero UID")
+                .setDescription("Этот UID является UID Zenless Zone Zero")
                 .setEmoji("1334169563599863819")
         )
 

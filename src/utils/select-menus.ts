@@ -8,7 +8,7 @@ export function selectCharacter(profile: DjHoyoProfile){
         .setMinValues(1)
         .setMaxValues(1)
         .setCustomId("select_character")
-        .setPlaceholder("Select a character")
+        .setPlaceholder("Выберите персонажа")
         .setOptions(Object.keys(profile.avatar_order!).map((x) => {
             const str = String(x);
             const char = getCharacter(profile.hoyo_type, str);
@@ -25,7 +25,7 @@ export function selectUidCharacter(uidResponse: UID){
         .setMinValues(1)
         .setMaxValues(1)
         .setCustomId("uid_select_character")
-        .setPlaceholder("Select a character")
+        .setPlaceholder("Выберите персонажа")
         .setOptions(uidResponse.avatars.map((avatar) => new StringSelectMenuOptionBuilder()
             .setLabel(avatar.name)
             .setValue(avatar.id)

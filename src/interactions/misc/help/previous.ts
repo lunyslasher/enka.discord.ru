@@ -24,7 +24,7 @@ export default {
                 fields.push({ name: name, value: command.description });
         }
         const pageCount = Math.ceil(fields.length / 10);
-        const footer = `Page ${(pageNumber - 1).toString()} out of ${pageCount.toString()}`;
+        const footer = `Страница ${(pageNumber - 1).toString()} из ${pageCount.toString()}`;
 
         fields = fields.slice((pageNumber - 2) * 10, (pageNumber - 1) * 10);
 
@@ -36,12 +36,12 @@ export default {
 
         let previous = new ButtonBuilder()
             .setCustomId("previous")
-            .setLabel("Previous")
+            .setLabel("Назад")
             .setStyle(ButtonStyle.Primary);
 
         const next = new ButtonBuilder()
             .setCustomId("next")
-            .setLabel("Next")
+            .setLabel("Далее")
             .setStyle(ButtonStyle.Primary);
 
         if (pageNumber - 1 === 1) {

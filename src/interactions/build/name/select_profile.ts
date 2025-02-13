@@ -12,12 +12,12 @@ export default {
     run: async (interaction) => {
         if(!sameUser(interaction)) {
             return await interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 flags: MessageFlagsBitField.Flags.Ephemeral
             });
         }
 
-        const errorMsg = "An error occurred whilst trying to complete this. Try again."
+        const errorMsg = "При выполнении произошла ошибка. Попробуйте ещё раз."
 
         const value = interaction.values[0];
 
