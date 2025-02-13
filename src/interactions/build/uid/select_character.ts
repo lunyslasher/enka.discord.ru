@@ -12,7 +12,7 @@ export default {
     run: async (interaction) => {
         if(!sameUser(interaction)) {
             return await interaction.reply({
-                content: "You can not interact with another users command",
+                content: "Вы не можете взаимодействовать с командой другого пользователя",
                 flags: MessageFlagsBitField.Flags.Ephemeral
             });
         }
@@ -35,14 +35,14 @@ export default {
 
         const data = await API.uid(hoyo_type, uid);
         if(!data) return await interaction.editReply({
-            content: "This UID does not exist, or couldn't be fetched."
+            content: "Этого UID не существует или не может быть обработан."
         })
 
         const rows = setDefault(interaction.message.components.slice(0,2), characterId);
 
         const cardNumber = data.avatars.findIndex((character) => character.id === values[1])+1;
 
-        const url = `https://cards.enka.network/${getFromType(hoyo_type, "u", "hsr", "zzz")}/${uid}/${cardNumber}/image`
+        const url = `https://cards.enka.network/${getFromType(hoyo_type, "u", "hsr", "zzz")}/${uid}/${cardNumber}/image?lang=ru`
 
         const image = await getBuffer(url);
 
@@ -57,10 +57,10 @@ export default {
         })
 
         const embed = new EmbedBuilder()
-            .setTitle(`${data.nickname}'s ${character.name} Build`)
+            .setTitle(`${character.name} первопроходца ${data.nickname}`)
             .setColor(character.colorFromElement)
             .setImage(`attachment://${imgName}`)
-            .setFooter({ text: uid })
+            .setFooter({ text: `UID: ${uid}` })
 
         await interaction.editReply({
             files: [attachment],

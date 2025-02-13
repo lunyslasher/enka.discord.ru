@@ -93,7 +93,7 @@ async function profile(interaction: ChatInputCommandInteraction) {
         .setMinValues(1)
         .setMaxValues(1)
         .setCustomId("select_profile")
-        .setPlaceholder("Select a profile")
+        .setPlaceholder("Выберите профиль")
         .setOptions(arr.map(h =>
             new StringSelectMenuOptionBuilder()
                 .setLabel('nickname' in h.player_info ? h.player_info.nickname : h.player_info.ProfileDetail.Nickname)
@@ -119,7 +119,7 @@ async function profile(interaction: ChatInputCommandInteraction) {
 async function uid(interaction: ChatInputCommandInteraction) {
     const selectMenu = new StringSelectMenuBuilder().setMaxValues(1).setMinValues(1)
         .setCustomId("uid_select_game")
-        .setPlaceholder("Select a game")
+        .setPlaceholder("Выберите игру")
         .addOptions(
             new StringSelectMenuOptionBuilder()
                 .setLabel("Genshin Impact")

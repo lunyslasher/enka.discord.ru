@@ -102,11 +102,11 @@ export function getLocale(type: HoyoType_T, getter: string | number): string {
     if(typeof getter === "number") getter = getter.toString();
     switch (type) {
         case HoyoType.GI:
-            return giLocs.en[getter];
+            return giLocs.ru[getter];
         case HoyoType.HSR:
-            return hsrLocs.en[getter];
+            return hsrLocs.ru[getter];
         case HoyoType.ZZZ:
-            return zzzLocs.en[getter];
+            return zzzLocs.ru[getter];
     }
 }
 
