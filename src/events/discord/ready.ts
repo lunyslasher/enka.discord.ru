@@ -1,4 +1,4 @@
-import { Client, REST, Routes } from "discord.js";
+import {Activity, Client, REST, Routes} from "discord.js";
 import { commands } from "../..";
 import { readdirSync } from "fs";
 import path from "path";
@@ -56,6 +56,10 @@ export default async function (client: Client) {
                 { body: loadedCommands },
             );
         }
+        client.user!.setPresence({
+            activities: [{ name: `ваши сборки`, type: 3 }],
+            status: "online",
+        });
         console.log(
             `Logged in as ${client.user?.tag}! Loaded ${commands.size} interactions.`,
         );
