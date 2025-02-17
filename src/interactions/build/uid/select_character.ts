@@ -57,7 +57,7 @@ export default {
         })
 
         const embed = new EmbedBuilder()
-            .setTitle(`${character.name} первопроходца ${data.nickname}`)
+            .setTitle(`${character.name} игрока ${data.nickname}`)
             .setColor(character.colorFromElement)
             .setImage(`attachment://${imgName}`)
             .setFooter({ text: `UID: ${uid}` })
